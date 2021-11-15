@@ -11,7 +11,7 @@ app.get('/c', (req, res) => {
     var options = {
         host: B_HOST,
         port: B_PORT,
-        path: '/a',
+        path: '/b',
         method: 'GET',
         headers: req.headers,
     };
@@ -24,11 +24,11 @@ app.get('/c', (req, res) => {
             });
             wordres.on('end', () => {
                 json = JSON.parse(json);
-                let str = json.cap.concat(random(1,101));
+                let str = json.cap.concat(random(1,100));
                 res.writeHead(200, {
                     "Content-Type":"application/json",
                 });
-                res.send(200, `{"str" : ${str}}`);
+                res.end(`{"str" : "${str}"}`);
             });
 
         });
@@ -39,9 +39,9 @@ app.get('/c', (req, res) => {
 });
 
 function random(min, max) {
-    return Math.random() * (max - min) + min;
+    return Math.round(Math.random() * (max - min) + min);
 }
 
 app.listen(PORT, () => {
-    console.log('random word microservice');
+    console.log('random capitalized word with number microservice');
 });

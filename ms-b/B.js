@@ -16,6 +16,7 @@ app.get('/b', (req, res) => {
         headers: req.headers,
     };
 
+    let capitalized = "";
     const wordreq = http.request(options, 
         wordres => {
             let json = [];
@@ -24,11 +25,11 @@ app.get('/b', (req, res) => {
             });
             wordres.on('end', () => {
                 json = JSON.parse(json);
-                let capitalized = json.word.toUpperCase();
+                capitalized = json.word.toUpperCase();
                 res.writeHead(200, {
                     "Content-Type":"application/json",
                 });
-                res.send(200, `{"cap" : ${capitalized}}`);
+                res.end(`{"cap" : "${capitalized}"}`);
             });
 
         });
@@ -39,5 +40,5 @@ app.get('/b', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log('random word microservice');
+    console.log('random capialized word microservice');
 });
